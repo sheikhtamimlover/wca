@@ -18,7 +18,7 @@
 
 <br/>
 
-[📦 NPM](https://www.npmjs.com/package/@sheikhtamimlover/wca) • [🤖 Example Bot](https://github.com/sheikhtamimlover/ST_WhatsappBot) • [🐛 Issues](https://github.com/sheikhtamimlover/wca/issues) • [💬 WhatsApp](https://wa.me/8801877781655)
+[📦 NPM](https://www.npmjs.com/package/@sheikhtamimlover/wca) • [🤖 Example Bot](https://github.com/sheikhtamimlover/ST_WhatsappBot) • [🐛 Issues](https://github.com/sheikhtamimlover/wca/issues) • [💬 WhatsApp](https://wa.me/8801xxxxxxxxx)
 
 </div>
 
@@ -86,7 +86,7 @@ const wca = require('@sheikhtamimlover/wca');
 
 wca({
     authFolder:     './wca_auth',
-    phoneNumber:    '8801877781655',   // international format, no +
+    phoneNumber:    '8801xxxxxxxxx',   // international format, no +
     usePairingCode: true,
 }, (err, api) => {
     if (err) return console.error(err);
@@ -289,7 +289,7 @@ async function main() {
 
     wca({
         authFolder:     './wca_auth',
-        phoneNumber:    '8801877781655',
+        phoneNumber:    '8801xxxxxxxxx',
         usePairingCode: true,
         globalOptions:  {
             listenEvents:  true,
@@ -399,7 +399,7 @@ WhatsApp internally uses **LID** (Linked Identity) JIDs — e.g. `18639312497062
 | 📦 NPM package | [`@sheikhtamimlover/wca`](https://www.npmjs.com/package/@sheikhtamimlover/wca) |
 | 🧩 WCA source | [github.com/sheikhtamimlover/wca](https://github.com/sheikhtamimlover/wca) |
 | 🤖 Example bot | [github.com/sheikhtamimlover/ST_WhatsappBot](https://github.com/sheikhtamimlover/ST_WhatsappBot) |
-| 💬 Contact | [wa.me/8801877781655](https://wa.me/8801877781655) |
+| 💬 Contact | [wa.me/8801xxxxxxxxx](https://wa.me/8801xxxxxxxxx) |
 
 ---
 
