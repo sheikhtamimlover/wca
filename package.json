@@ -1,0 +1,57 @@
+{
+  "name": "@sheikhtamimlover/wca",
+  "version": "1.0.0",
+  "description": "FCA-style WhatsApp Client API built on Baileys — send messages, media, manage groups, and listen to all WhatsApp events with a familiar callback interface.",
+  "type": "commonjs",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./checkUpdate": "./checkUpdate.js",
+    "./utils": "./utils.js"
+  },
+  "files": [
+    "index.js",
+    "utils.js",
+    "checkUpdate.js",
+    "src/",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node -e \"const wca=require('.');console.log('WCA OK');\""
+  },
+  "keywords": [
+    "whatsapp",
+    "whatsapp-bot",
+    "baileys",
+    "wca",
+    "whatsapp-api",
+    "whatsapp-client",
+    "fca",
+    "messenger-bot",
+    "whatsapp-web"
+  ],
+  "author": {
+    "name": "Sheikh Tamim",
+    "url": "https://github.com/sheikhtamimlover"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sheikhtamimlover/wca.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sheikhtamimlover/wca/issues"
+  },
+  "homepage": "https://github.com/sheikhtamimlover/wca#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "peerDependencies": {
+    "@whiskeysockets/baileys": ">=6.0.0"
+  },
+  "dependencies": {
+    "pino": "^8.0.0",
+    "qrcode-terminal": "^0.12.0"
+  }
+}
