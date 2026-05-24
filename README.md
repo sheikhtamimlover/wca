@@ -4,9 +4,9 @@
 
 <br/>
 
-[![npm version](https://img.shields.io/npm/v/@sheikhtamimlover/wca?color=25D366&label=version&logo=npm&style=for-the-badge)](https://www.npmjs.com/package/@sheikhtamimlover/wca)
-[![npm downloads](https://img.shields.io/npm/dm/@sheikhtamimlover/wca?color=blue&logo=npm&style=for-the-badge)](https://www.npmjs.com/package/@sheikhtamimlover/wca)
-[![Node.js](https://img.shields.io/node/v/@sheikhtamimlover/wca?color=brightgreen&logo=node.js&style=for-the-badge)](https://nodejs.org)
+[![npm version](https://img.shields.io/npm/v/@sheikhtamim/wca?color=25D366&label=version&logo=npm&style=for-the-badge)](https://www.npmjs.com/package/@sheikhtamim/wca)
+[![npm downloads](https://img.shields.io/npm/dm/@sheikhtamim/wca?color=blue&logo=npm&style=for-the-badge)](https://www.npmjs.com/package/@sheikhtamim/wca)
+[![Node.js](https://img.shields.io/node/v/@sheikhtamim/wca?color=brightgreen&logo=node.js&style=for-the-badge)](https://nodejs.org)
 [![GitHub stars](https://img.shields.io/github/stars/sheikhtamimlover/wca?color=yellow&logo=github&style=for-the-badge)](https://github.com/sheikhtamimlover/wca/stargazers)
 [![License](https://img.shields.io/github/license/sheikhtamimlover/wca?color=red&style=for-the-badge)](LICENSE)
 [![Visitors](https://visitor-badge.laobi.icu/badge?page_id=sheikhtamimlover.wca&style=for-the-badge&color=0d1117)](https://github.com/sheikhtamimlover/wca)
@@ -18,7 +18,7 @@
 
 <br/>
 
-[📦 NPM](https://www.npmjs.com/package/@sheikhtamimlover/wca) • [🤖 Example Bot](https://github.com/sheikhtamimlover/ST_WhatsappBot) • [🐛 Issues](https://github.com/sheikhtamimlover/wca/issues) • [💬 WhatsApp](https://wa.me/8801xxxxxxxxx)
+[📦 NPM](https://www.npmjs.com/package/@sheikhtamim/wca) • [🤖 Example Bot](https://github.com/sheikhtamimlover/ST_WhatsappBot) • [🐛 Issues](https://github.com/sheikhtamimlover/wca/issues) • [💬 WhatsApp](https://wa.me/8801xxxxxxxxx)
 
 </div>
 
@@ -55,7 +55,7 @@ npm -v
 ## 📦 Installation
 
 ```bash
-npm install @sheikhtamimlover/wca
+npm install @sheikhtamim/wca
 ```
 
 ---
@@ -65,7 +65,7 @@ npm install @sheikhtamimlover/wca
 ### QR Code login
 
 ```js
-const wca = require('@sheikhtamimlover/wca');
+const wca = require('@sheikhtamim/wca');
 
 wca({ authFolder: './wca_auth' }, (err, api) => {
     if (err) return console.error(err);
@@ -82,7 +82,7 @@ wca({ authFolder: './wca_auth' }, (err, api) => {
 ### Pairing Code login (no QR scan needed)
 
 ```js
-const wca = require('@sheikhtamimlover/wca');
+const wca = require('@sheikhtamim/wca');
 
 wca({
     authFolder:     './wca_auth',
@@ -263,7 +263,7 @@ api.sock                                   // raw Baileys socket
 ## 🔄 Auto-Update
 
 ```js
-const { checkForWCAUpdate } = require('@sheikhtamimlover/wca/checkUpdate');
+const { checkForWCAUpdate } = require('@sheikhtamim/wca/checkUpdate');
 
 // At the top of your bot — checks npm and auto-installs if newer version exists
 await checkForWCAUpdate();
@@ -281,8 +281,8 @@ await checkForWCAUpdate({
 ## 🤖 Full Bot Example
 
 ```js
-const wca = require('@sheikhtamimlover/wca');
-const { checkForWCAUpdate } = require('@sheikhtamimlover/wca/checkUpdate');
+const wca = require('@sheikhtamim/wca');
+const { checkForWCAUpdate } = require('@sheikhtamim/wca/checkUpdate');
 
 async function main() {
     await checkForWCAUpdate({ silent: false });
@@ -396,7 +396,7 @@ WhatsApp internally uses **LID** (Linked Identity) JIDs — e.g. `18639312497062
 
 | | |
 |---|---|
-| 📦 NPM package | [`@sheikhtamimlover/wca`](https://www.npmjs.com/package/@sheikhtamimlover/wca) |
+| 📦 NPM package | [`@sheikhtamim/wca`](https://www.npmjs.com/package/@sheikhtamim/wca) |
 | 🧩 WCA source | [github.com/sheikhtamimlover/wca](https://github.com/sheikhtamimlover/wca) |
 | 🤖 Example bot | [github.com/sheikhtamimlover/ST_WhatsappBot](https://github.com/sheikhtamimlover/ST_WhatsappBot) |
 | 💬 Contact | [wa.me/8801600203673](https://wa.me/8801600203673) |

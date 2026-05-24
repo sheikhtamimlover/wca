@@ -1,5 +1,5 @@
 {
-  "name": "@sheikhtamimlover/wca",
+  "name": "@sheikhtamim/wca",
   "version": "1.0.0",
   "description": "FCA-style WhatsApp Client API built on Baileys — send messages, media, manage groups, and listen to all WhatsApp events with a familiar callback interface.",
   "type": "commonjs",
@@ -38,7 +38,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sheikhtamimlover/wca.git"
+    "url": "git+https://github.com/sheikhtamimlover/wca.git"
   },
   "bugs": {
     "url": "https://github.com/sheikhtamimlover/wca/issues"

@@ -3,12 +3,12 @@
 /**
  * WCA Auto-Update checker
  *
- * Checks npm registry for a newer version of @sheikhtamimlover/wca
+ * Checks npm registry for a newer version of @sheikhtamim/wca
  * and auto-installs it if found.
  *
  * Usage (add to your bot's startup):
  *
- *   const { checkForWCAUpdate } = require('@sheikhtamimlover/wca/checkUpdate');
+ *   const { checkForWCAUpdate } = require('@sheikhtamim/wca/checkUpdate');
  *   await checkForWCAUpdate();       // check + auto-update
  *
  * Or with options:
@@ -20,7 +20,7 @@ const { execSync } = require("child_process");
 const fs     = require("fs");
 const path   = require("path");
 
-const PKG_NAME    = "@sheikhtamimlover/wca";
+const PKG_NAME    = "@sheikhtamim/wca";
 const REGISTRY    = "https://registry.npmjs.org/" + PKG_NAME + "/latest";
 const BOT_REPO    = "https://github.com/sheikhtamimlover/ST_WhatsappBot.git";
 const WCA_REPO    = "https://github.com/sheikhtamimlover/wca.git";
