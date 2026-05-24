@@ -21,17 +21,7 @@ const C = {
 };
 
 function printWCABanner(selfID, region) {
-    const rows = [
-        C.bold + C.bGreen + "  ✅  WCA - WhatsApp Client API Connected" + C.reset,
-        "",
-        C.bold + C.bWhite + "  📱  Account        " + C.reset + C.bYellow + (selfID || "Unknown") + C.reset,
-        C.bCyan + "  🌐  github.com/sheikhtamimlover" + C.reset,
-        "",
-        C.bold + C.magenta + "  💎  WCA by ST | Sheikh Tamim" + C.reset,
-    ];
-    process.stdout.write("\n");
-    rows.forEach((l) => console.log(l));
-    process.stdout.write("\n");
+    console.log(C.bGreen + "✅ WCA Connected - Account: " + (selfID || "Unknown") + C.reset);
 }
 
 /**
@@ -102,7 +92,7 @@ function wca(options, callback) {
     };
 
     // ── Dynamic ESM import of Baileys ────────────────────────────────────────
-    import(path.resolve(__dirname, "../lib/index.js"))
+    import("@whiskeysockets/baileys")
         .then(async (Baileys) => {
             const {
                 default: makeWASocket,
@@ -153,10 +143,10 @@ function wca(options, callback) {
 
                     if (qr && !printQR) {
                         if (qrCodeTerminal) {
-                            console.log(C.cyan + "\n  📱  Scan this QR Code:\n" + C.reset);
+                            console.log(C.cyan + "Scan QR Code:\n" + C.reset);
                             qrCodeTerminal.generate(qr, { small: true });
                         } else {
-                            console.log(C.yellow + "  [QR]  " + qr + C.reset);
+                            console.log(C.yellow + "QR: " + qr + C.reset);
                         }
                     }
 
@@ -165,13 +155,10 @@ function wca(options, callback) {
                         try {
                             await utils.delay(2000);
                             const code = await sock.requestPairingCode(phoneNumber);
-                            console.log(
-                                "\n" + C.bold + C.bGreen + "  🔑  PAIRING CODE: " + C.reset +
-                                C.bold + C.bYellow + code + C.reset + "\n" +
-                                C.dim + "  Enter this code in WhatsApp → Linked Devices → Link with phone number\n" + C.reset
-                            );
+                            console.log(C.bGreen + "Pairing Code: " + C.bYellow + code + C.reset);
+                            console.log(C.dim + "Enter in WhatsApp → Linked Devices → Link with phone number" + C.reset);
                         } catch (e) {
-                            console.log(C.red + "  [WCA] Failed to get pairing code: " + e.message + C.reset);
+                            console.log(C.red + "Failed to get pairing code: " + e.message + C.reset);
                         }
                     }
 
