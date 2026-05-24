@@ -14,19 +14,7 @@ const C = {
 function printListenBanner(ctx) {
     const jid   = ctx.selfID || "";
     const phone = jid.split(":")[0].split("@")[0] || jid;
-    const lines = [
-        "",
-        C.bold + C.bCyan  + "  ╔══════════════════════════════════════════════╗" + C.reset,
-        C.bold + C.bCyan  + "  ║" + C.reset + C.bold + C.bWhite + "        📡  WCA — WhatsApp Client API         " + C.reset + C.bold + C.bCyan + "║" + C.reset,
-        C.bold + C.bCyan  + "  ╠══════════════════════════════════════════════╣" + C.reset,
-        C.bold + C.bCyan  + "  ║" + C.reset + "  " + C.bGreen  + "✅  Connected & Listening for events" + C.reset + "        " + C.bold + C.bCyan + "║" + C.reset,
-        C.bold + C.bCyan  + "  ║" + C.reset + "  " + C.bYellow + "📱  Bot  : " + C.reset + C.bWhite + phone.padEnd(34) + C.reset + C.bold + C.bCyan + "║" + C.reset,
-        C.bold + C.bCyan  + "  ║" + C.reset + "  " + C.cyan    + "✍️   Author : Sheikh Tamim" + C.reset + "                  " + C.bold + C.bCyan + "║" + C.reset,
-        C.bold + C.bCyan  + "  ║" + C.reset + "  " + C.dim     + "🔗  github.com/sheikhtamimlover" + C.reset + "             " + C.bold + C.bCyan + "║" + C.reset,
-        C.bold + C.bCyan  + "  ╚══════════════════════════════════════════════╝" + C.reset,
-        "",
-    ];
-    lines.forEach((l) => process.stdout.write(l + "\n"));
+    console.log(C.bGreen + "✅ Listening for events - Bot: " + phone + C.reset);
 }
 
 /**
