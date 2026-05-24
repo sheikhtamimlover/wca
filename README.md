@@ -14,7 +14,7 @@
 <br/>
 
 > **WCA** is an FCA-style WhatsApp bot framework built on top of [Baileys](https://github.com/WhiskeySockets/Baileys).  
-> If you know how to write a Facebook Messenger bot using `fca-unofficial`, you already know WCA.
+> If you know how to write a Facebook Messenger bot using `stfca`, you already know WCA.
 
 <br/>
 
@@ -399,7 +399,7 @@ WhatsApp internally uses **LID** (Linked Identity) JIDs — e.g. `18639312497062
 | 📦 NPM package | [`@sheikhtamimlover/wca`](https://www.npmjs.com/package/@sheikhtamimlover/wca) |
 | 🧩 WCA source | [github.com/sheikhtamimlover/wca](https://github.com/sheikhtamimlover/wca) |
 | 🤖 Example bot | [github.com/sheikhtamimlover/ST_WhatsappBot](https://github.com/sheikhtamimlover/ST_WhatsappBot) |
-| 💬 Contact | [wa.me/8801xxxxxxxxx](https://wa.me/8801xxxxxxxxx) |
+| 💬 Contact | [wa.me/8801600203673](https://wa.me/8801600203673) |
 
 ---
 
