@@ -18,7 +18,7 @@
 
 <br/>
 
-[📦 NPM](https://www.npmjs.com/package/@sheikhtamim/wca) • [🤖 Example Bot](https://github.com/sheikhtamimlover/ST_WhatsappBot) • [🐛 Issues](https://github.com/sheikhtamimlover/wca/issues) • [💬 WhatsApp](https://wa.me/8801xxxxxxxxx)
+[📦 NPM](https://www.npmjs.com/package/@sheikhtamim/wca) • [🤖 Example Bot](https://github.com/sheikhtamimlover/ST_WhatsappBot) • [🐛 Issues](https://github.com/sheikhtamimlover/wca/issues) • [💬 Support Group](https://chat.whatsapp.com/I46aewAKhY8IrfmgMjODPj?mode=gi_t) • [📸 Instagram](https://instagram.com/sheikh.tamim_lover)
 
 </div>
 
@@ -29,12 +29,13 @@
 | Category | Feature |
 |---|---|
 | 🔌 Connection | QR Code login · Pairing Code (no phone scan) · Auto-reconnect |
-| 💬 Messaging | Send text · Reply/quote · Mentions · Emoji reactions · Delete for everyone |
+| 💬 Messaging | Send text · Reply/quote · Mentions · Emoji reactions · Delete for everyone · Edit message · Send poll |
 | 📎 Media | Image · Video · Audio · PTT/Voice · Document · Sticker · GIF · Location |
-| 👥 Groups | Create · Leave · Add/Kick · Promote/Demote · Rename · Description · Invite link · Settings |
-| 👤 Profile | Get/Set profile picture · Status text · Display name · Block/Unblock |
+| 👥 Groups | Create · Leave · Add/Kick · Promote/Demote · Rename · Description · Invite link · Settings · Pin message · Get all groups |
+| 👤 Profile | Get/Set profile picture · Status text · Display name · Block/Unblock · Get DM info |
 | 📡 Events | Messages · Reactions · Delete events · Group changes · Typing presence · Calls |
-| 🔄 Updates | Auto-update checker (`checkForWCAUpdate()`) |
+| 💬 Chats | Get all chats · Get all contacts · Archive/Unarchive · Mute/Unmute |
+| 🔄 Updates | Auto-update on startup — always keeps itself current |
 
 ---
 
@@ -113,9 +114,10 @@ When the pairing code prints in your console:
 
 ```js
 wca({
-    authFolder:     './wca_auth',   // auth state folder  (default: './wca_auth')
-    phoneNumber:    '628xxx',       // for pairing code
-    usePairingCode: true,           // force pairing code flow
+    authFolder:       './wca_auth',   // auth state folder  (default: './wca_auth')
+    phoneNumber:      '628xxx',       // for pairing code
+    usePairingCode:   true,           // force pairing code flow
+    skipUpdateCheck:  false,          // set true to skip auto-update on start
 
     globalOptions: {
         selfListen:            false,   // process own sent messages
@@ -132,6 +134,37 @@ wca({
         online:                true,    // appear online when connected
     },
 }, callback);
+```
+
+---
+
+## 🔄 Auto-Update (built-in)
+
+WCA **automatically checks for updates every time it starts** and installs the latest version before connecting. No manual setup needed — just run your bot normally.
+
+```js
+// WCA auto-updates itself. No extra code required.
+wca({ authFolder: './wca_auth' }, (err, api) => { ... });
+```
+
+To disable auto-update (not recommended):
+
+```js
+wca({ skipUpdateCheck: true, authFolder: './wca_auth' }, (err, api) => { ... });
+```
+
+You can also call it manually:
+
+```js
+const { checkForWCAUpdate } = require('@sheikhtamim/wca/checkUpdate');
+await checkForWCAUpdate();
+
+// Options:
+await checkForWCAUpdate({
+    autoUpdate:   true,    // install the update   (default: true)
+    silent:       false,   // suppress console log (default: false)
+    exitOnUpdate: true,    // exit(2) so pm2/nodemon restarts (default: true)
+});
 ```
 
 ---
@@ -210,6 +243,10 @@ api.sendTypingIndicator(bool, threadID)
 api.markAsRead(threadID, senderID, [ids])
 api.reactToMessage(threadID, msgID, emoji)
 api.deleteMessage(threadID, msgID, forAll)
+api.editMessage(threadID, msgID, newText)   // edit a sent message
+api.sendPoll(threadID, question, options, [opts])  // send a poll
+api.pinMessage(threadID, msgID)             // pin a message
+api.unpinMessage(threadID, msgID)           // unpin a message
 api.downloadMedia(rawMsg)                   // → Buffer
 ```
 
@@ -226,7 +263,8 @@ api.sendMessage({ body: 'Reply!', replyToMessage: msg.raw }, msg.threadID);
 ### Groups
 
 ```js
-api.getGroupInfo(threadID)
+api.getGroupInfo(threadID)                  // full group info (for DB saving)
+api.getAllGroups()                           // all groups the bot is in
 api.getGroupAdmins(threadID)
 api.getGroupInviteLink(threadID)
 api.groupRevokeInvite(threadID)
@@ -239,7 +277,7 @@ api.promoteAdmin(threadID, [userIDs])
 api.demoteAdmin(threadID, [userIDs])
 api.changeGroupSubject(threadID, name)
 api.changeGroupDescription(threadID, desc)
-api.groupSettingUpdate(threadID, setting)  // 'announcement'|'not_announcement'|'locked'|'unlocked'
+api.groupSettingUpdate(threadID, setting)   // 'announcement'|'not_announcement'|'locked'|'unlocked'
 ```
 
 ### Profile & user
@@ -247,33 +285,62 @@ api.groupSettingUpdate(threadID, setting)  // 'announcement'|'not_announcement'|
 ```js
 api.getProfilePicture(userID, type)
 api.getUserInfo([userIDs])
+api.getDMInfo(userID)                       // full DM user info (for DB saving)
+api.getContacts()                           // all contacts
+api.getChats()                              // all chats / conversations
 api.fetchStatus(userID)
 api.updateProfilePicture(media)
 api.updateProfileStatus(text)
 api.updateProfileName(name)
 api.blockContact(userID)
 api.unblockContact(userID)
-api.sendPresenceUpdate(type, threadID)     // 'available'|'unavailable'|'composing'|'paused'
-api.getCurrentUserID()                     // own JID
-api.sock                                   // raw Baileys socket
+api.sendPresenceUpdate(type, threadID)      // 'available'|'unavailable'|'composing'|'paused'
+api.getCurrentUserID()                      // own JID
+api.sock                                    // raw Baileys socket
+```
+
+### Chats
+
+```js
+api.archiveChat(threadID, [archive=true])   // archive a chat
+api.unarchiveChat(threadID)                 // unarchive a chat
+api.muteChat(threadID, [durationMs])        // mute a chat  (default 8 hours)
+api.unmuteChat(threadID)                    // unmute a chat
 ```
 
 ---
 
-## 🔄 Auto-Update
+## 🗄️ Group / DM Info for Database
+
+### Get full group info (GC)
 
 ```js
-const { checkForWCAUpdate } = require('@sheikhtamim/wca/checkUpdate');
+const info = await api.getGroupInfo('120363xxx@g.us');
+// Returns:
+// {
+//   threadID, name, description, owner, creation,
+//   size, adminIDs, participantIDs,
+//   participants: [{ userID, isAdmin, isSuperAdmin }],
+//   announcement, restrict, ephemeralDuration, raw
+// }
+```
 
-// At the top of your bot — checks npm and auto-installs if newer version exists
-await checkForWCAUpdate();
+### Get all groups the bot is in
 
-// Options:
-await checkForWCAUpdate({
-    autoUpdate:   true,    // install the update   (default: true)
-    silent:       false,   // suppress console log (default: false)
-    exitOnUpdate: true,    // exit(2) so pm2/nodemon restarts (default: true)
-});
+```js
+const groups = await api.getAllGroups();
+groups.forEach(g => console.log(g.name, g.size));
+```
+
+### Get full DM user info
+
+```js
+const info = await api.getDMInfo('628xxx@s.whatsapp.net');
+// Returns:
+// {
+//   userID, phone, name, status, statusTimestamp,
+//   profilePicture, isBusiness, businessProfile, isMe, raw
+// }
 ```
 
 ---
@@ -282,59 +349,76 @@ await checkForWCAUpdate({
 
 ```js
 const wca = require('@sheikhtamim/wca');
-const { checkForWCAUpdate } = require('@sheikhtamim/wca/checkUpdate');
 
-async function main() {
-    await checkForWCAUpdate({ silent: false });
+// WCA auto-updates itself before connecting — no extra code needed.
+wca({
+    authFolder:     './wca_auth',
+    phoneNumber:    '8801xxxxxxxxx',
+    usePairingCode: true,
+    globalOptions:  {
+        listenEvents:  true,
+        selfListen:    false,
+        autoReconnect: true,
+    },
+}, (err, api) => {
+    if (err) return console.error('WCA error:', err);
+    console.log('Bot ready:', api.getCurrentUserID());
 
-    wca({
-        authFolder:     './wca_auth',
-        phoneNumber:    '8801xxxxxxxxx',
-        usePairingCode: true,
-        globalOptions:  {
-            listenEvents:  true,
-            selfListen:    false,
-            autoReconnect: true,
-        },
-    }, (err, api) => {
-        if (err) return console.error('WCA error:', err);
-        console.log('Bot ready:', api.getCurrentUserID());
+    api.listen(async (err, msg) => {
+        if (err) return;
+        if (!msg || msg.type !== 'message' || msg.fromMe) return;
 
-        api.listen(async (err, msg) => {
-            if (err) return;
-            if (!msg || msg.type !== 'message' || msg.fromMe) return;
+        const { body, threadID } = msg;
+        if (!body.startsWith('!')) return;
 
-            const { body, threadID } = msg;
-            if (!body.startsWith('!')) return;
+        const [cmd, ...args] = body.slice(1).split(' ');
 
-            const [cmd, ...args] = body.slice(1).split(' ');
+        switch (cmd.toLowerCase()) {
+            case 'ping':
+                await api.sendMessage('🏓 Pong!', threadID);
+                break;
 
-            switch (cmd.toLowerCase()) {
-                case 'ping':
-                    await api.sendMessage('🏓 Pong!', threadID);
-                    break;
+            case 'poll':
+                await api.sendPoll(threadID, 'Favourite colour?', ['Red', 'Blue', 'Green']);
+                break;
 
-                case 'react':
-                    await api.reactToMessage(threadID, msg.messageID, '👍');
-                    break;
-
-                case 'reply':
-                    // Quoted reply using quoteOptions
+            case 'gcinfo':
+                if (msg.isGroup) {
+                    const info = await api.getGroupInfo(threadID);
                     await api.sendMessage(
-                        { body: 'This is a reply!', replyToMessage: msg.raw },
+                        `*${info.name}*\nMembers: ${info.size}\nAdmins: ${info.adminIDs.length}`,
                         threadID
                     );
-                    break;
+                }
+                break;
 
-                case 'image':
-                    await api.sendImage('https://picsum.photos/800/600', threadID, 'Test image');
-                    break;
-            }
-        });
+            case 'dminfo':
+                if (!msg.isGroup) {
+                    const info = await api.getDMInfo(msg.senderID);
+                    await api.sendMessage(
+                        `Name: ${info.name || 'Unknown'}\nStatus: ${info.status || 'None'}`,
+                        threadID
+                    );
+                }
+                break;
+
+            case 'react':
+                await api.reactToMessage(threadID, msg.messageID, '👍');
+                break;
+
+            case 'reply':
+                await api.sendMessage(
+                    { body: 'This is a reply!', replyToMessage: msg.raw },
+                    threadID
+                );
+                break;
+
+            case 'image':
+                await api.sendImage('https://picsum.photos/800/600', threadID, 'Test image');
+                break;
+        }
     });
-}
-
-main().catch(console.error);
+});
 ```
 
 ---
@@ -345,11 +429,14 @@ main().catch(console.error);
 wca/
  ├── index.js              ← Main entry  wca(options, callback)
  ├── utils.js              ← JID helpers, LID resolver, event formatter
- ├── checkUpdate.js        ← Auto-update checker
+ ├── checkUpdate.js        ← Auto-update checker (runs on every startup)
  └── src/                  ← One file per feature
      ├── listenMqtt.js
      ├── sendMessage.js
      ├── sendMedia.js
+     ├── sendPoll.js
+     ├── editMessage.js
+     ├── pinMessage.js
      ├── sendTypingIndicator.js
      ├── sendReadReceipt.js
      ├── sendLocation.js
@@ -358,6 +445,7 @@ wca/
      ├── deleteMessage.js
      ├── downloadMedia.js
      ├── getGroupInfo.js
+     ├── getAllGroups.js
      ├── getGroupAdmins.js
      ├── getGroupInviteLink.js
      ├── groupRevokeInvite.js
@@ -372,11 +460,17 @@ wca/
      ├── changeGroupDescription.js
      ├── getProfilePicture.js
      ├── getUserInfo.js
+     ├── getDMInfo.js
+     ├── getContacts.js
+     ├── getChats.js
+     ├── archiveChat.js
+     ├── muteChat.js
      ├── fetchStatus.js
      ├── updateProfilePicture.js
      ├── updateProfileStatus.js
      ├── updateProfileName.js
      ├── blockContact.js
+     ├── sendButtons.js
      └── getAppState.js
 ```
 
@@ -399,7 +493,9 @@ WhatsApp internally uses **LID** (Linked Identity) JIDs — e.g. `18639312497062
 | 📦 NPM package | [`@sheikhtamim/wca`](https://www.npmjs.com/package/@sheikhtamim/wca) |
 | 🧩 WCA source | [github.com/sheikhtamimlover/wca](https://github.com/sheikhtamimlover/wca) |
 | 🤖 Example bot | [github.com/sheikhtamimlover/ST_WhatsappBot](https://github.com/sheikhtamimlover/ST_WhatsappBot) |
-| 💬 Contact | [wa.me/8801600203673](https://wa.me/8801600203673) |
+| 💬 Support Group | [Join WCA Support GC](https://chat.whatsapp.com/I46aewAKhY8IrfmgMjODPj?mode=gi_t) |
+| 📸 Instagram | [instagram.com/sheikh.tamim_lover](https://instagram.com/sheikh.tamim_lover) |
+| 📞 Contact | [wa.me/8801600203673](https://wa.me/8801600203673) |
 
 ---
 
@@ -408,5 +504,7 @@ WhatsApp internally uses **LID** (Linked Identity) JIDs — e.g. `18639312497062
 Made with ❤️ by **Sheikh Tamim**
 
 [![GitHub](https://img.shields.io/badge/GitHub-sheikhtamimlover-181717?logo=github&style=flat-square)](https://github.com/sheikhtamimlover)
+[![Instagram](https://img.shields.io/badge/Instagram-sheikh.tamim__lover-E4405F?logo=instagram&style=flat-square)](https://instagram.com/sheikh.tamim_lover)
+[![WhatsApp Group](https://img.shields.io/badge/Support_GC-Join_Now-25D366?logo=whatsapp&style=flat-square)](https://chat.whatsapp.com/I46aewAKhY8IrfmgMjODPj?mode=gi_t)
 
 </div>
